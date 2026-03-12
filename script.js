@@ -1,4 +1,4 @@
-const plants = [
+const plants=[
 
 {
 cz:"Levandule úzkolistá",
@@ -37,7 +37,7 @@ layer:"back"
 
 {
 cz:"Třtina ostrokvětá",
-lat:"Calamagrostis × acutiflora 'Karl Foerster'",
+lat:"Calamagrostis 'Karl Foerster'",
 img:"img/calamagrostis.jpg",
 layer:"back"
 }
@@ -45,71 +45,71 @@ layer:"back"
 ];
 
 
+
 function navrhni(){
 
-// náhodné zamíchání rostlin
+let sirka=document.getElementById("sirka").value;
+let delka=document.getElementById("delka").value;
+
+let plocha=sirka*delka;
+
 let shuffled=[...plants].sort(()=>Math.random()-0.5);
 
-// výběr rostlin podle vrstev
-let front=shuffled.filter(p=>p.layer==="front").slice(0,1);
+
+let front=shuffled.filter(p=>p.layer==="front")[0];
 let middle=shuffled.filter(p=>p.layer==="middle").slice(0,2);
-let back=shuffled.filter(p=>p.layer==="back").slice(0,1);
+let back=shuffled.filter(p=>p.layer==="back")[0];
 
-let selected=[...front,...middle,...back];
+let selected=[front,...middle,back];
 
 
-// ------------------------------------------------
-// KARTY ROSTLIN
-// ------------------------------------------------
 
 let plantHTML="";
 
 selected.forEach(p=>{
 
+let count=Math.round((plocha*5)/selected.length);
+
 plantHTML+=`
+
 <div class="card">
 
-<img src="${p.img}" alt="${p.cz}">
+<img src="${p.img}">
 
 <h3>${p.cz}</h3>
 
-<p class="latin">${p.lat}</p>
+<p>${p.lat}</p>
+
+<p>Počet: ${count} ks</p>
 
 </div>
+
 `;
 
 });
 
-let plantsContainer=document.getElementById("plants");
-
-if(plantsContainer){
-plantsContainer.innerHTML=plantHTML;
-}
+document.getElementById("plants").innerHTML=plantHTML;
 
 
-
-// ------------------------------------------------
-// VIZUALIZACE ZÁHONU
-// ------------------------------------------------
 
 let planHTML="";
 
 selected.forEach(p=>{
 
-let count=4;
+let count=6;
 
-if(p.layer==="middle") count=5;
-if(p.layer==="back") count=3;
+if(p.layer==="middle") count=8;
+if(p.layer==="back") count=4;
 
 for(let i=0;i<count;i++){
 
 planHTML+=`
 
-<div class="cell">
+<div class="plant">
 
-<img src="${p.img}" alt="${p.cz}">
+<img src="${p.img}">
 
-<div class="label">${p.cz.split(" ")[0]}</div>
+<div class="plant-name">${p.cz.split(" ")[0]}</div>
 
 </div>
 
@@ -119,10 +119,6 @@ planHTML+=`
 
 });
 
-let planContainer=document.getElementById("plan");
-
-if(planContainer){
-planContainer.innerHTML=planHTML;
-}
+document.getElementById("plan").innerHTML=planHTML;
 
 }
