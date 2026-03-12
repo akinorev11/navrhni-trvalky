@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
 
 <meta charset="UTF-8">
-<title>Navrhni Trvalky</title>
+<title>AI návrhář trvalkového záhonu</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#f4f7f5;
+font-family: Arial, Helvetica, sans-serif;
 margin:0;
+background:#eef4ef;
+color:#2d3a2f;
+}
+
+header{
+background:linear-gradient(120deg,#3b7d4a,#6fbf7f);
+color:white;
+padding:40px;
+text-align:center;
+}
+
+header h1{
+margin:0;
+font-size:32px;
+}
+
+header p{
+margin-top:10px;
+opacity:0.9;
 }
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
+margin-top:-40px;
+padding:30px;
 background:white;
-padding:40px;
-margin-top:40px;
 border-radius:10px;
-box-shadow:0 5px 20px rgba(0,0,0,0.1);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
-h1{
-text-align:center;
-color:#2f6b3b;
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
 }
 
 label{
@@ -35,37 +55,58 @@ font-weight:bold;
 input,select{
 width:100%;
 padding:10px;
-margin-top:5px;
-margin-bottom:15px;
-border-radius:5px;
+margin-top:6px;
+border-radius:6px;
 border:1px solid #ccc;
 }
 
 button{
-background:#2f6b3b;
+margin-top:20px;
+width:100%;
+padding:15px;
+background:#3b7d4a;
 color:white;
 border:none;
-padding:15px;
+border-radius:6px;
 font-size:16px;
-border-radius:5px;
 cursor:pointer;
-width:100%;
+transition:0.3s;
 }
 
 button:hover{
-background:#24542e;
+background:#2f623b;
+transform:scale(1.02);
 }
 
 .result{
-background:#f1f7f2;
-padding:20px;
-border-radius:8px;
+margin-top:30px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
 margin-top:20px;
 }
 
-.plant{
-padding:8px;
-border-bottom:1px solid #ddd;
+.card{
+background:#f3f8f4;
+padding:15px;
+border-radius:8px;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+.card h4{
+margin:0 0 5px 0;
+color:#2f6b3b;
+}
+
+footer{
+text-align:center;
+margin-top:40px;
+padding:20px;
+font-size:14px;
+color:#666;
 }
 
 </style>
@@ -74,17 +115,32 @@ border-bottom:1px solid #ddd;
 
 <body>
 
-<div class="container">
+<header>
 
 <h1>🌿 AI návrhář trvalkového záhonu</h1>
+<p>Navrhni ideální kombinaci rostlin podle podmínek zahrady</p>
 
-<p>Zadej podmínky záhonu:</p>
+</header>
+
+<div class="container">
+
+<div class="form-grid">
+
+<div>
 
 <label>Šířka záhonu (m)</label>
 <input id="sirka" type="number" value="3">
 
+</div>
+
+<div>
+
 <label>Délka záhonu (m)</label>
 <input id="delka" type="number" value="2">
+
+</div>
+
+<div>
 
 <label>Světlo</label>
 <select id="svetlo">
@@ -93,22 +149,36 @@ border-bottom:1px solid #ddd;
 <option value="stin">Stín</option>
 </select>
 
+</div>
+
+<div>
+
 <label>Půda</label>
-<select id="puda">
+<select>
 <option>Suchá</option>
 <option>Normální</option>
 <option>Vlhká</option>
 </select>
 
-<button onclick="navrhni()">Navrhni záhon</button>
+</div>
+
+</div>
+
+<button onclick="navrhni()">Navrhni výsadbu</button>
 
 <div id="vysledek" class="result"></div>
 
 </div>
 
+<footer>
+
+AI experiment – návrh trvalkových záhonů
+
+</footer>
+
 <script>
 
-const databaze = {
+const databaze={
 
 slunce:[
 "Lavandula angustifolia",
@@ -139,9 +209,9 @@ stin:[
 
 };
 
-function nahodnePole(pole){
+function randomPlants(arr){
 
-return pole.sort(()=>0.5-Math.random()).slice(0,4);
+return arr.sort(()=>0.5-Math.random()).slice(0,4);
 
 }
 
@@ -153,19 +223,27 @@ let svetlo=document.getElementById("svetlo").value;
 
 let plocha=sirka*delka;
 
-let rostliny=nahodnePole(databaze[svetlo]);
-
 let hustota=5;
 
-let pocet=Math.round((plocha*hustota)/rostliny.length);
+let vybrane=randomPlants(databaze[svetlo]);
 
-let html="<h3>Doporučená výsadba</h3>";
+let pocet=Math.round((plocha*hustota)/vybrane.length);
 
-rostliny.forEach(r=>{
+let html="<h3>Doporučená kombinace rostlin</h3>";
+html+="<div class='cards'>";
 
-html+=`<div class="plant">🌸 ${r} — ${pocet} ks</div>`;
+vybrane.forEach(r=>{
+
+html+=`
+<div class="card">
+<h4>${r}</h4>
+<p>${pocet} ks</p>
+</div>
+`;
 
 });
+
+html+="</div>";
 
 document.getElementById("vysledek").innerHTML=html;
 
