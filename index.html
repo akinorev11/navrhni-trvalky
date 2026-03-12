@@ -15,7 +15,6 @@
 
 <body>
 
-
 <header>
 
 <h1>🌿 AI návrhář trvalkového záhonu</h1>
@@ -24,9 +23,7 @@
 </header>
 
 
-
 <div class="container">
-
 
 <section class="form-section">
 
@@ -34,45 +31,35 @@
 
 <div class="form-grid">
 
-<div class="form-item">
+<div>
 <label>Šířka záhonu (m)</label>
-<input id="sirka" type="number" value="3" min="1">
+<input id="sirka" type="number" value="3">
 </div>
 
-<div class="form-item">
+<div>
 <label>Délka záhonu (m)</label>
-<input id="delka" type="number" value="2" min="1">
+<input id="delka" type="number" value="2">
 </div>
 
-<div class="form-item">
+<div>
 <label>Světlo</label>
-
 <select id="svetlo">
-
 <option value="slunce">Plné slunce</option>
 <option value="polostin">Polostín</option>
 <option value="stin">Stín</option>
-
 </select>
-
 </div>
 
-<div class="form-item">
-
+<div>
 <label>Půda</label>
-
 <select id="puda">
-
 <option value="sucha">Suchá</option>
 <option value="normalni">Normální</option>
 <option value="vlhka">Vlhká</option>
-
 </select>
-
 </div>
 
 </div>
-
 
 <button class="main-button" onclick="navrhni()">
 Navrhni výsadbu
@@ -81,8 +68,7 @@ Navrhni výsadbu
 </section>
 
 
-
-<section class="result-section">
+<section>
 
 <h2>Doporučené rostliny</h2>
 
@@ -91,8 +77,7 @@ Navrhni výsadbu
 </section>
 
 
-
-<section class="plan-section">
+<section>
 
 <h2>Vizualizace záhonu</h2>
 
@@ -104,14 +89,11 @@ Navrhni výsadbu
 </div>
 
 
-
 <footer>
 
 AI experiment – návrh trvalkových záhonů
 
 </footer>
-
-
 
 <script src="script.js"></script>
 
