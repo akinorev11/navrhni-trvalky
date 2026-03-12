@@ -1,87 +1,173 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="cs">
 <head>
-<title>Navrhni Trvalky</title>
+
 <meta charset="UTF-8">
+<title>Navrhni Trvalky</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f7f5;
+margin:0;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+background:white;
+padding:40px;
+margin-top:40px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+color:#2f6b3b;
+}
+
+label{
+font-weight:bold;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+background:#2f6b3b;
+color:white;
+border:none;
+padding:15px;
+font-size:16px;
+border-radius:5px;
+cursor:pointer;
+width:100%;
+}
+
+button:hover{
+background:#24542e;
+}
+
+.result{
+background:#f1f7f2;
+padding:20px;
+border-radius:8px;
+margin-top:20px;
+}
+
+.plant{
+padding:8px;
+border-bottom:1px solid #ddd;
+}
+
+</style>
+
 </head>
 
-<body style="font-family: Arial; max-width:700px; margin:auto;">
+<body>
 
-<h1>🌿 Navrhni Trvalkový Záhon</h1>
+<div class="container">
+
+<h1>🌿 AI návrhář trvalkového záhonu</h1>
 
 <p>Zadej podmínky záhonu:</p>
 
-<label>Šířka záhonu (m):</label><br>
+<label>Šířka záhonu (m)</label>
 <input id="sirka" type="number" value="3">
 
-<br><br>
-
-<label>Délka záhonu (m):</label><br>
+<label>Délka záhonu (m)</label>
 <input id="delka" type="number" value="2">
 
-<br><br>
-
-<label>Světlo:</label><br>
+<label>Světlo</label>
 <select id="svetlo">
-<option>Slunce</option>
-<option>Polostín</option>
-<option>Stín</option>
+<option value="slunce">Slunce</option>
+<option value="polostin">Polostín</option>
+<option value="stin">Stín</option>
 </select>
 
-<br><br>
-
-<label>Půda:</label><br>
+<label>Půda</label>
 <select id="puda">
 <option>Suchá</option>
 <option>Normální</option>
 <option>Vlhká</option>
 </select>
 
-<br><br>
+<button onclick="navrhni()">Navrhni záhon</button>
 
-<button onclick="navrhniRostliny()">Navrhni rostliny</button>
+<div id="vysledek" class="result"></div>
 
-<h3>Návrh výsadby:</h3>
-
-<p id="vysledek"></p>
+</div>
 
 <script>
 
-async function navrhniRostliny() {
+const databaze = {
 
-let sirka = document.getElementById("sirka").value;
-let delka = document.getElementById("delka").value;
-let svetlo = document.getElementById("svetlo").value;
-let puda = document.getElementById("puda").value;
+slunce:[
+"Lavandula angustifolia",
+"Salvia nemorosa",
+"Echinacea purpurea",
+"Perovskia atriplicifolia",
+"Nepeta faassenii",
+"Gaura lindheimeri"
+],
 
-document.getElementById("vysledek").innerHTML = "🌱 Generuji návrh záhonu...";
+polostin:[
+"Geranium Rozanne",
+"Heuchera Palace Purple",
+"Astilbe chinensis",
+"Brunnera macrophylla",
+"Alchemilla mollis",
+"Hosta Halcyon"
+],
 
-try {
+stin:[
+"Hosta",
+"Dryopteris filix-mas",
+"Brunnera",
+"Pulmonaria",
+"Tiarella",
+"Polygonatum"
+]
 
-const response = await fetch("/api/navrh", {
-method: "POST",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify({
-sirka,
-delka,
-svetlo,
-puda
-})
-});
+};
 
-const data = await response.json();
+function nahodnePole(pole){
 
-document.getElementById("vysledek").innerHTML = data.text;
-
-} catch (error) {
-
-document.getElementById("vysledek").innerHTML =
-"❌ Nepodařilo se získat návrh. Zkontroluj API nastavení.";
+return pole.sort(()=>0.5-Math.random()).slice(0,4);
 
 }
+
+function navrhni(){
+
+let sirka=document.getElementById("sirka").value;
+let delka=document.getElementById("delka").value;
+let svetlo=document.getElementById("svetlo").value;
+
+let plocha=sirka*delka;
+
+let rostliny=nahodnePole(databaze[svetlo]);
+
+let hustota=5;
+
+let pocet=Math.round((plocha*hustota)/rostliny.length);
+
+let html="<h3>Doporučená výsadba</h3>";
+
+rostliny.forEach(r=>{
+
+html+=`<div class="plant">🌸 ${r} — ${pocet} ks</div>`;
+
+});
+
+document.getElementById("vysledek").innerHTML=html;
 
 }
 
