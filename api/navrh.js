@@ -1,5 +1,7 @@
 export default async function handler(req, res) {
 
+try {
+
 const { sirka, delka, svetlo, puda } = req.body;
 
 const prompt = `
@@ -27,7 +29,10 @@ body: JSON.stringify({
 model: "gpt-4o-mini",
 
 messages: [
-{ role: "user", content: prompt }
+{
+role: "user",
+content: prompt
+}
 ]
 
 })
@@ -37,7 +42,15 @@ messages: [
 const data = await response.json();
 
 res.status(200).json({
-text: data.choices[0].message.content
+text: data.choices?.[0]?.message?.content || "AI nevrátila odpověď."
 });
+
+} catch (error) {
+
+res.status(500).json({
+text: "Chyba serveru při generování návrhu."
+});
+
+}
 
 }
