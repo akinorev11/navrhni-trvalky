@@ -164,7 +164,7 @@ color:#666;
 
 </div>
 
-<button onclick="navrhni()">Navrhni výsadbu</button>
+<button type="button" onclick="navrhni()">Navrhni výsadbu</button>
 
 <div id="vysledek" class="result"></div>
 
@@ -218,15 +218,26 @@ return copy.sort(()=>0.5-Math.random()).slice(0,4);
 }
 
 function navrhni(){
-alert("Funkce se spustila");
-let sirka=document.getElementById("sirka").value;
-let delka=document.getElementById("delka").value;
+
+let sirka=parseFloat(document.getElementById("sirka").value);
+let delka=parseFloat(document.getElementById("delka").value);
 let svetlo=document.getElementById("svetlo").value;
 
 let plocha=sirka*delka;
+
 let hustota=5;
 
-let vybrane=randomPlants(databaze[svetlo]);
+let rostliny=databaze[svetlo];
+
+if(!rostliny){
+
+document.getElementById("vysledek").innerHTML="Chyba: nenalezena databáze rostlin.";
+
+return;
+
+}
+
+let vybrane=randomPlants(rostliny);
 
 let pocet=Math.round((plocha*hustota)/vybrane.length);
 
@@ -252,6 +263,32 @@ html+=`
 `;
 
 });
+
+html+="</div>";
+
+html+="<h3 style='margin-top:30px'>Vizualizace výsadby</h3>";
+
+html+="<div style='display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px'>";
+
+for(let i=0;i<36;i++){
+
+let rostlina=vybrane[i%vybrane.length];
+
+html+=`<div style="
+background:#dfeee3;
+padding:8px;
+font-size:10px;
+text-align:center;
+border-radius:4px;
+">${rostlina.name.split(" ")[0]}</div>`;
+
+}
+
+html+="</div>";
+
+document.getElementById("vysledek").innerHTML=html;
+
+}
 
 html+="</div>";
 
