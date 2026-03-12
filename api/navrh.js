@@ -41,14 +41,22 @@ content: prompt
 
 const data = await response.json();
 
+if (!data.choices) {
+
+return res.status(200).json({
+text: "OpenAI chyba: " + JSON.stringify(data)
+});
+
+}
+
 res.status(200).json({
-text: data.choices?.[0]?.message?.content || "AI nevrátila odpověď."
+text: data.choices[0].message.content
 });
 
 } catch (error) {
 
-res.status(500).json({
-text: "Chyba serveru při generování návrhu."
+res.status(200).json({
+text: "Server error: " + error.message
 });
 
 }
