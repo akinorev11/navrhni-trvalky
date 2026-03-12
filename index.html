@@ -21,11 +21,6 @@ padding:45px;
 text-align:center;
 }
 
-header h1{
-margin:0;
-font-size:34px;
-}
-
 .container{
 max-width:1100px;
 margin:auto;
@@ -40,10 +35,6 @@ box-shadow:0 15px 30px rgba(0,0,0,.15);
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:20px;
-}
-
-label{
-font-weight:600;
 }
 
 input,select{
@@ -76,33 +67,20 @@ margin-top:25px;
 background:#f3f8f4;
 padding:15px;
 border-radius:10px;
-box-shadow:0 4px 10px rgba(0,0,0,.08);
 }
 
 .card img{
 width:100%;
 height:150px;
 object-fit:cover;
-border-radius:8px;
-}
-
-.card h4{
-margin:8px 0 4px 0;
-}
-
-.card small{
-color:#666;
-}
-
-.bed{
-margin-top:30px;
+border-radius:6px;
 }
 
 .layer{
 display:flex;
+gap:15px;
 justify-content:center;
-gap:10px;
-margin:10px 0;
+margin:15px 0;
 }
 
 .plant{
@@ -112,7 +90,7 @@ text-align:center;
 
 .plant img{
 width:100%;
-height:80px;
+height:90px;
 object-fit:cover;
 border-radius:6px;
 }
@@ -130,7 +108,7 @@ color:#666;
 
 <header>
 <h1>🌿 AI návrhář trvalkového záhonu</h1>
-<p>Generuje realistickou kombinaci trvalek a travin</p>
+<p>Návrh trvalek a travin podle principů zahradní architektury</p>
 </header>
 
 <div class="container">
@@ -183,15 +161,20 @@ const databaze=[
 {
 cz:"Levandule úzkolistá",
 lat:"Lavandula angustifolia 'Hidcote'",
-typ:"trvalka",
 vrstva:"predni",
-img:"https://upload.wikimedia.org/wikipedia/commons/6/60/Lavandula_angustifolia.jpg"
+img:"https://upload.wikimedia.org/wikipedia/commons/3/32/Lavandula_angustifolia_%27Hidcote%27.jpg"
+},
+
+{
+cz:"Šanta kočičí",
+lat:"Nepeta × faassenii 'Walker's Low'",
+vrstva:"predni",
+img:"https://upload.wikimedia.org/wikipedia/commons/3/3f/Nepeta_faassenii.jpg"
 },
 
 {
 cz:"Šalvěj hajní",
 lat:"Salvia nemorosa 'Caradonna'",
-typ:"trvalka",
 vrstva:"stred",
 img:"https://upload.wikimedia.org/wikipedia/commons/4/4e/Salvia_nemorosa.jpg"
 },
@@ -199,7 +182,6 @@ img:"https://upload.wikimedia.org/wikipedia/commons/4/4e/Salvia_nemorosa.jpg"
 {
 cz:"Třapatka nachová",
 lat:"Echinacea purpurea 'Magnus'",
-typ:"trvalka",
 vrstva:"stred",
 img:"https://upload.wikimedia.org/wikipedia/commons/2/21/Echinacea_purpurea.jpg"
 },
@@ -207,40 +189,36 @@ img:"https://upload.wikimedia.org/wikipedia/commons/2/21/Echinacea_purpurea.jpg"
 {
 cz:"Dochan psárkovitý",
 lat:"Pennisetum alopecuroides 'Hameln'",
-typ:"travina",
 vrstva:"zadni",
-img:"https://upload.wikimedia.org/wikipedia/commons/2/29/Pennisetum_alopecuroides.jpg"
+img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Pennisetum_alopecuroides.jpg"
 },
 
 {
-cz:"Ozdobnice čínská",
-lat:"Miscanthus sinensis 'Gracillimus'",
-typ:"travina",
+cz:"Třtina ostrokvětá",
+lat:"Calamagrostis × acutiflora 'Karl Foerster'",
 vrstva:"zadni",
-img:"https://upload.wikimedia.org/wikipedia/commons/5/58/Miscanthus_sinensis.jpg"
+img:"https://upload.wikimedia.org/wikipedia/commons/8/8e/Calamagrostis_acutiflora.jpg"
 }
 
 ];
 
+function shuffle(arr){
+return [...arr].sort(()=>Math.random()-0.5);
+}
+
 function navrhni(){
 
-let vybrane=databaze.sort(()=>Math.random()-0.5).slice(0,4);
+let vybrane=shuffle(databaze).slice(0,5);
 
-let html="<h3>Doporučené rostliny</h3>";
-html+="<div class='cards'>";
+let html="<h3>Doporučené rostliny</h3><div class='cards'>";
 
 vybrane.forEach(r=>{
 
 html+=`
 <div class="card">
-
 <img src="${r.img}">
-
 <h4>${r.cz}</h4>
-<small>${r.lat}</small>
-
-<p>Typ: ${r.typ}</p>
-
+<div>${r.lat}</div>
 </div>
 `;
 
@@ -249,7 +227,6 @@ html+=`
 html+="</div>";
 
 html+="<h3>Vizualizace záhonu</h3>";
-html+="<div class='bed'>";
 
 ["zadni","stred","predni"].forEach(vrstva=>{
 
@@ -259,10 +236,8 @@ vybrane.filter(p=>p.vrstva==vrstva).forEach(r=>{
 
 html+=`
 <div class="plant">
-
 <img src="${r.img}">
 <div>${r.cz.split(" ")[0]}</div>
-
 </div>
 `;
 
@@ -271,8 +246,6 @@ html+=`
 html+="</div>";
 
 });
-
-html+="</div>";
 
 document.getElementById("vysledek").innerHTML=html;
 
