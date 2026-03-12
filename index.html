@@ -181,11 +181,11 @@ AI experiment – návrh trvalkových záhonů
 const databaze = {
 
 slunce:[
-{name:"Lavandula angustifolia",color:"fialová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/6/60/Lavandula_angustifolia.jpg"},
-{name:"Salvia nemorosa",color:"fialová",bloom:"VI–IX",img:"https://upload.wikimedia.org/wikipedia/commons/4/4e/Salvia_nemorosa.jpg"},
-{name:"Echinacea purpurea",color:"růžová",bloom:"VII–IX",img:"https://upload.wikimedia.org/wikipedia/commons/2/21/Echinacea_purpurea.jpg"},
-{name:"Nepeta faassenii",color:"modrá",bloom:"V–IX",img:"https://upload.wikimedia.org/wikipedia/commons/e/e5/Nepeta_faassenii.jpg"},
-{name:"Gaura lindheimeri",color:"bílá",bloom:"VI–X",img:"https://upload.wikimedia.org/wikipedia/commons/0/05/Gaura_lindheimeri.jpg"}
+{name:"Lavandula angustifolia",color:"fialová",bloom:"VI–VIII",img:"https://images.unsplash.com/photo-1597848212624-ea9b1b7d0f3e"},
+{name:"Salvia nemorosa",color:"fialová",bloom:"VI–IX",img:"https://images.unsplash.com/photo-1598899134739-24c46f58f273"},
+{name:"Echinacea purpurea",color:"růžová",bloom:"VII–IX",img:"https://images.unsplash.com/photo-1591886960571-74d43a9d4166"},
+{name:"Nepeta faassenii",color:"modrá",bloom:"V–IX",img:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6"},
+{name:"Gaura lindheimeri",color:"bílá",bloom:"VI–X",img:"https://images.unsplash.com/photo-1502082553048-f009c37129b9"}
 ],
 
 polostin:[
@@ -242,7 +242,7 @@ let r=vybrane[i];
 
 html+=`
 <div class="card">
-<img src="${r.img}" style="width:100%;border-radius:6px">
+<img src="${r.img}" style="width:100%;height:140px;object-fit:cover;border-radius:6px">
 <h4>${r.name}</h4>
 <p>Počet: ${pocet} ks</p>
 <p>Barva květu: ${r.color}</p>
