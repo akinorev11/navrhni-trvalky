@@ -178,7 +178,7 @@ AI experiment – návrh trvalkových záhonů
 
 <script>
 
-const databaze={
+const databaze = {
 
 slunce:[
 {name:"Lavandula angustifolia",color:"fialová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/6/60/Lavandula_angustifolia.jpg"},
@@ -207,13 +207,9 @@ stin:[
 
 function randomPlants(arr){
 
-function randomPlants(arr){
-
 let copy=[...arr];
-
-return copy.sort(()=>0.5-Math.random()).slice(0,4);
-
-}
+copy.sort(()=>Math.random()-0.5);
+return copy.slice(0,4);
 
 }
 
@@ -224,17 +220,13 @@ let delka=parseFloat(document.getElementById("delka").value);
 let svetlo=document.getElementById("svetlo").value;
 
 let plocha=sirka*delka;
-
 let hustota=5;
 
 let rostliny=databaze[svetlo];
 
 if(!rostliny){
-
-document.getElementById("vysledek").innerHTML="Chyba: nenalezena databáze rostlin.";
-
+document.getElementById("vysledek").innerHTML="Chyba databáze.";
 return;
-
 }
 
 let vybrane=randomPlants(rostliny);
@@ -244,50 +236,20 @@ let pocet=Math.round((plocha*hustota)/vybrane.length);
 let html="<h3>Doporučená kombinace rostlin</h3>";
 html+="<div class='cards'>";
 
-vybrane.forEach(r=>{
+for(let i=0;i<vybrane.length;i++){
+
+let r=vybrane[i];
 
 html+=`
 <div class="card">
-
 <img src="${r.img}" style="width:100%;border-radius:6px">
-
 <h4>${r.name}</h4>
-
 <p>Počet: ${pocet} ks</p>
-
 <p>Barva květu: ${r.color}</p>
-
 <p>Kvetení: ${r.bloom}</p>
-
 </div>
 `;
 
-});
-
-html+="</div>";
-
-html+="<h3 style='margin-top:30px'>Vizualizace výsadby</h3>";
-
-html+="<div style='display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px'>";
-
-for(let i=0;i<36;i++){
-
-let rostlina=vybrane[i%vybrane.length];
-
-html+=`<div style="
-background:#dfeee3;
-padding:8px;
-font-size:10px;
-text-align:center;
-border-radius:4px;
-">${rostlina.name.split(" ")[0]}</div>`;
-
-}
-
-html+="</div>";
-
-document.getElementById("vysledek").innerHTML=html;
-
 }
 
 html+="</div>";
@@ -300,13 +262,9 @@ for(let i=0;i<36;i++){
 
 let rostlina=vybrane[i%vybrane.length];
 
-html+=`<div style="
-background:#dfeee3;
-padding:8px;
-font-size:10px;
-text-align:center;
-border-radius:4px;
-">${rostlina.name.split(" ")[0]}</div>`;
+html+=`<div style="background:#dfeee3;padding:8px;font-size:10px;text-align:center;border-radius:4px;">
+${rostlina.name.split(" ")[0]}
+</div>`;
 
 }
 
