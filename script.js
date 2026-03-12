@@ -1,5 +1,5 @@
-const plants=[
- 
+const plants = [
+
 {
 cz:"Levandule úzkolistá",
 lat:"Lavandula angustifolia 'Hidcote'",
@@ -37,53 +37,92 @@ layer:"back"
 
 {
 cz:"Třtina ostrokvětá",
-lat:"Calamagrostis 'Karl Foerster'",
+lat:"Calamagrostis × acutiflora 'Karl Foerster'",
 img:"img/calamagrostis.jpg",
 layer:"back"
 }
 
 ];
 
+
 function navrhni(){
 
-let shuffled=[...plants].sort(()=>0.5-Math.random());
+// náhodné zamíchání rostlin
+let shuffled=[...plants].sort(()=>Math.random()-0.5);
 
-let selected=shuffled.slice(0,4);
+// výběr rostlin podle vrstev
+let front=shuffled.filter(p=>p.layer==="front").slice(0,1);
+let middle=shuffled.filter(p=>p.layer==="middle").slice(0,2);
+let back=shuffled.filter(p=>p.layer==="back").slice(0,1);
+
+let selected=[...front,...middle,...back];
+
+
+// ------------------------------------------------
+// KARTY ROSTLIN
+// ------------------------------------------------
 
 let plantHTML="";
 
 selected.forEach(p=>{
 
 plantHTML+=`
-
 <div class="card">
-<img src="${p.img}">
+
+<img src="${p.img}" alt="${p.cz}">
+
 <h3>${p.cz}</h3>
-<p>${p.lat}</p>
+
+<p class="latin">${p.lat}</p>
+
 </div>
 `;
 
 });
 
-document.getElementById("plants").innerHTML=plantHTML;
+let plantsContainer=document.getElementById("plants");
+
+if(plantsContainer){
+plantsContainer.innerHTML=plantHTML;
+}
+
+
+
+// ------------------------------------------------
+// VIZUALIZACE ZÁHONU
+// ------------------------------------------------
 
 let planHTML="";
 
-for(let i=0;i<15;i++){
+selected.forEach(p=>{
 
-let p=selected[i%selected.length];
+let count=4;
+
+if(p.layer==="middle") count=5;
+if(p.layer==="back") count=3;
+
+for(let i=0;i<count;i++){
 
 planHTML+=`
 
 <div class="cell">
-<img src="${p.img}">
-<div>${p.cz.split(" ")[0]}</div>
+
+<img src="${p.img}" alt="${p.cz}">
+
+<div class="label">${p.cz.split(" ")[0]}</div>
+
 </div>
+
 `;
 
 }
 
-document.getElementById("plan").innerHTML=planHTML;
+});
 
+let planContainer=document.getElementById("plan");
+
+if(planContainer){
+planContainer.innerHTML=planHTML;
 }
 
+}
