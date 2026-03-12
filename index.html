@@ -154,7 +154,7 @@ color:#666;
 <div>
 
 <label>Půda</label>
-<select>
+<select id="puda">
 <option>Suchá</option>
 <option>Normální</option>
 <option>Vlhká</option>
@@ -181,37 +181,39 @@ AI experiment – návrh trvalkových záhonů
 const databaze={
 
 slunce:[
-"Lavandula angustifolia",
-"Salvia nemorosa",
-"Echinacea purpurea",
-"Perovskia atriplicifolia",
-"Nepeta faassenii",
-"Gaura lindheimeri"
+{name:"Lavandula angustifolia",color:"fialová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/6/60/Lavandula_angustifolia.jpg"},
+{name:"Salvia nemorosa",color:"fialová",bloom:"VI–IX",img:"https://upload.wikimedia.org/wikipedia/commons/4/4e/Salvia_nemorosa.jpg"},
+{name:"Echinacea purpurea",color:"růžová",bloom:"VII–IX",img:"https://upload.wikimedia.org/wikipedia/commons/2/21/Echinacea_purpurea.jpg"},
+{name:"Nepeta faassenii",color:"modrá",bloom:"V–IX",img:"https://upload.wikimedia.org/wikipedia/commons/e/e5/Nepeta_faassenii.jpg"},
+{name:"Gaura lindheimeri",color:"bílá",bloom:"VI–X",img:"https://upload.wikimedia.org/wikipedia/commons/0/05/Gaura_lindheimeri.jpg"}
 ],
 
 polostin:[
-"Geranium Rozanne",
-"Heuchera Palace Purple",
-"Astilbe chinensis",
-"Brunnera macrophylla",
-"Alchemilla mollis",
-"Hosta Halcyon"
+{name:"Geranium Rozanne",color:"modrá",bloom:"VI–X",img:"https://upload.wikimedia.org/wikipedia/commons/3/35/Geranium_Rozanne.jpg"},
+{name:"Heuchera Palace Purple",color:"purpurová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heuchera_Palace_Purple.jpg"},
+{name:"Astilbe chinensis",color:"růžová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Astilbe.jpg"},
+{name:"Brunnera macrophylla",color:"modrá",bloom:"IV–V",img:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Brunnera_macrophylla.jpg"},
+{name:"Alchemilla mollis",color:"žlutá",bloom:"VI–VII",img:"https://upload.wikimedia.org/wikipedia/commons/3/33/Alchemilla_mollis.jpg"}
 ],
 
 stin:[
-"Hosta",
-"Dryopteris filix-mas",
-"Brunnera",
-"Pulmonaria",
-"Tiarella",
-"Polygonatum"
+{name:"Hosta",color:"bílá",bloom:"VII–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Hosta.jpg"},
+{name:"Dryopteris filix-mas",color:"zelená",bloom:"nekvete",img:"https://upload.wikimedia.org/wikipedia/commons/0/03/Dryopteris_filix-mas.jpg"},
+{name:"Pulmonaria",color:"modrá",bloom:"III–V",img:"https://upload.wikimedia.org/wikipedia/commons/7/76/Pulmonaria.jpg"},
+{name:"Tiarella",color:"bílá",bloom:"IV–VI",img:"https://upload.wikimedia.org/wikipedia/commons/3/3f/Tiarella_cordifolia.jpg"}
 ]
 
 };
 
 function randomPlants(arr){
 
-return arr.sort(()=>0.5-Math.random()).slice(0,4);
+function randomPlants(arr){
+
+let copy=[...arr];
+
+return copy.sort(()=>0.5-Math.random()).slice(0,4);
+
+}
 
 }
 
@@ -222,7 +224,6 @@ let delka=document.getElementById("delka").value;
 let svetlo=document.getElementById("svetlo").value;
 
 let plocha=sirka*delka;
-
 let hustota=5;
 
 let vybrane=randomPlants(databaze[svetlo]);
@@ -236,12 +237,41 @@ vybrane.forEach(r=>{
 
 html+=`
 <div class="card">
-<h4>${r}</h4>
-<p>${pocet} ks</p>
+
+<img src="${r.img}" style="width:100%;border-radius:6px">
+
+<h4>${r.name}</h4>
+
+<p>Počet: ${pocet} ks</p>
+
+<p>Barva květu: ${r.color}</p>
+
+<p>Kvetení: ${r.bloom}</p>
+
 </div>
 `;
 
 });
+
+html+="</div>";
+
+html+="<h3 style='margin-top:30px'>Vizualizace výsadby</h3>";
+
+html+="<div style='display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px'>";
+
+for(let i=0;i<36;i++){
+
+let rostlina=vybrane[i%vybrane.length];
+
+html+=`<div style="
+background:#dfeee3;
+padding:8px;
+font-size:10px;
+text-align:center;
+border-radius:4px;
+">${rostlina.name.split(" ")[0]}</div>`;
+
+}
 
 html+="</div>";
 
