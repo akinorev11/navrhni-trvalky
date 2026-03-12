@@ -12,6 +12,16 @@
 
 <p>Zadej podmínky záhonu:</p>
 
+<label>Šířka záhonu (m):</label><br>
+<input id="sirka" type="number" value="3">
+
+<br><br>
+
+<label>Délka záhonu (m):</label><br>
+<input id="delka" type="number" value="2">
+
+<br><br>
+
 <label>Světlo:</label><br>
 <select id="svetlo">
 <option>Slunce</option>
@@ -32,30 +42,44 @@
 
 <button onclick="navrhniRostliny()">Navrhni rostliny</button>
 
+<h3>Návrh výsadby:</h3>
+
 <p id="vysledek"></p>
 
 <script>
 
 function navrhniRostliny() {
 
+let sirka = document.getElementById("sirka").value;
+let delka = document.getElementById("delka").value;
 let svetlo = document.getElementById("svetlo").value;
-let puda = document.getElementById("puda").value;
 
-let vysledek = "";
+let plocha = sirka * delka;
+
+let rostliny = "";
+let hustota = 5;
 
 if (svetlo == "Slunce") {
-    vysledek = "Doporučené rostliny: Levandule, Šalvěj hajní, Třapatka";
+rostliny = ["Levandule", "Šalvěj hajní", "Třapatka"];
 }
 
 if (svetlo == "Polostín") {
-    vysledek = "Doporučené rostliny: Kakost, Dlužicha, Čechrava";
+rostliny = ["Kakost", "Dlužicha", "Čechrava"];
 }
 
 if (svetlo == "Stín") {
-    vysledek = "Doporučené rostliny: Kapradiny, Bohyška, Brunnera";
+rostliny = ["Kapradina", "Bohyška", "Brunnera"];
 }
 
-document.getElementById("vysledek").innerText = vysledek;
+let pocet = Math.round(plocha * hustota / rostliny.length);
+
+let vysledek = "";
+
+for (let i = 0; i < rostliny.length; i++) {
+vysledek += rostliny[i] + " – " + pocet + " ks<br>";
+}
+
+document.getElementById("vysledek").innerHTML = vysledek;
 
 }
 
