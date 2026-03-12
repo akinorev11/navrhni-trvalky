@@ -1,54 +1,72 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>AI návrhář trvalkového záhonu</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI návrhář trvalkového záhonu</title>
+
+<link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
-  <header>
-    <h1>🌿 AI návrhář trvalkového záhonu</h1>
-    <p>Návrh kombinace trvalek a trav</p>
-  </header>
 
-  <div class="container">
-    <div class="form-grid">
-      <div>
-        <label>Šířka záhonu (m)</label>
-        <input id="sirka" type="number" value="3">
-      </div>
-      <div>
-        <label>Délka záhonu (m)</label>
-        <input id="delka" type="number" value="2">
-      </div>
-      <div>
-        <label>Světlo</label>
-        <select id="svetlo">
-          <option value="slunce">Slunce</option>
-          <option value="polostin">Polostín</option>
-          <option value="stin">Stín</option>
-        </select>
-      </div>
-      <div>
-        <label>Půda</label>
-        <select id="puda">
-          <option value="sucha">Suchá</option>
-          <option value="normalni">Normální</option>
-          <option value="vlhka">Vlhká</option>
-        </select>
-      </div>
-    </div>
+<header>
+<h1>🌿 AI návrhář trvalkového záhonu</h1>
+<p>Zkombinujte trvalky a okrasné trávy podle stanoviště</p>
+</header>
 
-    <button onclick="navrhni()">Navrhni výsadbu</button>
 
-    <div id="vysledek"></div>
-  </div>
+<div class="container">
 
-  <footer>
-    AI experiment – návrh trvalkových záhonů
-  </footer>
+<div class="form-grid">
 
-  <script src="js/script.js"></script>
+<div>
+<label>Šířka záhonu (m)</label>
+<input id="sirka" type="number" value="3">
+</div>
+
+<div>
+<label>Délka záhonu (m)</label>
+<input id="delka" type="number" value="2">
+</div>
+
+<div>
+<label>Světlo</label>
+<select id="svetlo">
+<option value="slunce">Plné slunce</option>
+<option value="polostin">Polostín</option>
+<option value="stin">Stín</option>
+</select>
+</div>
+
+<div>
+<label>Půda</label>
+<select id="puda">
+<option value="sucha">Suchá</option>
+<option value="normalni">Normální</option>
+<option value="vlhka">Vlhká</option>
+</select>
+</div>
+
+</div>
+
+
+<button onclick="navrhni()">Navrhni výsadbu</button>
+
+
+<div id="vysledek"></div>
+
+</div>
+
+
+<footer>
+AI experiment – návrh trvalkových záhonů
+</footer>
+
+
+<script src="script.js"></script>
+
 </body>
 </html>
-<!-- redeploy -->
