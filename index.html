@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <title>Navrhni Trvalky</title>
 <meta charset="UTF-8">
@@ -12,7 +13,7 @@
 <p>Zadej podmínky záhonu:</p>
 
 <label>Světlo:</label><br>
-<select>
+<select id="svetlo">
 <option>Slunce</option>
 <option>Polostín</option>
 <option>Stín</option>
@@ -21,7 +22,7 @@
 <br><br>
 
 <label>Půda:</label><br>
-<select>
+<select id="puda">
 <option>Suchá</option>
 <option>Normální</option>
 <option>Vlhká</option>
@@ -29,9 +30,36 @@
 
 <br><br>
 
-<button>Navrhni rostliny</button>
+<button onclick="navrhniRostliny()">Navrhni rostliny</button>
 
-<p>(AI návrh zde zatím bude později)</p>
+<p id="vysledek"></p>
+
+<script>
+
+function navrhniRostliny() {
+
+let svetlo = document.getElementById("svetlo").value;
+let puda = document.getElementById("puda").value;
+
+let vysledek = "";
+
+if (svetlo == "Slunce") {
+    vysledek = "Doporučené rostliny: Levandule, Šalvěj hajní, Třapatka";
+}
+
+if (svetlo == "Polostín") {
+    vysledek = "Doporučené rostliny: Kakost, Dlužicha, Čechrava";
+}
+
+if (svetlo == "Stín") {
+    vysledek = "Doporučené rostliny: Kapradiny, Bohyška, Brunnera";
+}
+
+document.getElementById("vysledek").innerText = vysledek;
+
+}
+
+</script>
 
 </body>
 </html>
