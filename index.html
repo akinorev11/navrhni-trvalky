@@ -2,14 +2,13 @@
 <html lang="cs">
 
 <head>
-
 <meta charset="UTF-8">
 <title>AI návrhář trvalkového záhonu</title>
 
 <style>
 
 body{
-font-family: Arial, Helvetica, sans-serif;
+font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
 margin:0;
 background:#eef4ef;
 color:#2d3a2f;
@@ -18,28 +17,28 @@ color:#2d3a2f;
 header{
 background:linear-gradient(120deg,#3b7d4a,#6fbf7f);
 color:white;
-padding:40px;
+padding:45px;
 text-align:center;
 }
 
 header h1{
 margin:0;
-font-size:32px;
+font-size:34px;
 }
 
 header p{
 margin-top:10px;
-opacity:0.9;
+opacity:.9;
 }
 
 .container{
-max-width:1000px;
+max-width:1100px;
 margin:auto;
 margin-top:-40px;
-padding:30px;
+padding:35px;
 background:white;
-border-radius:10px;
-box-shadow:0 10px 25px rgba(0,0,0,0.15);
+border-radius:12px;
+box-shadow:0 15px 30px rgba(0,0,0,.15);
 }
 
 .form-grid{
@@ -49,7 +48,7 @@ gap:20px;
 }
 
 label{
-font-weight:bold;
+font-weight:600;
 }
 
 input,select{
@@ -61,16 +60,16 @@ border:1px solid #ccc;
 }
 
 button{
-margin-top:20px;
+margin-top:25px;
 width:100%;
-padding:15px;
+padding:16px;
 background:#3b7d4a;
 color:white;
 border:none;
-border-radius:6px;
-font-size:16px;
+border-radius:8px;
+font-size:17px;
 cursor:pointer;
-transition:0.3s;
+transition:.25s;
 }
 
 button:hover{
@@ -79,26 +78,61 @@ transform:scale(1.02);
 }
 
 .result{
-margin-top:30px;
+margin-top:35px;
 }
 
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
 margin-top:20px;
 }
 
 .card{
 background:#f3f8f4;
 padding:15px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.08);
+}
+
+.card img{
+width:100%;
+height:150px;
+object-fit:cover;
 border-radius:8px;
-box-shadow:0 3px 8px rgba(0,0,0,0.1);
+margin-bottom:8px;
 }
 
 .card h4{
-margin:0 0 5px 0;
+margin:5px 0;
 color:#2f6b3b;
+}
+
+.palette{
+display:flex;
+gap:10px;
+margin-top:10px;
+}
+
+.color-dot{
+width:20px;
+height:20px;
+border-radius:50%;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(6,1fr);
+gap:6px;
+margin-top:12px;
+}
+
+.cell{
+background:#dfeee3;
+padding:8px;
+font-size:11px;
+text-align:center;
+border-radius:4px;
 }
 
 footer{
@@ -116,10 +150,8 @@ color:#666;
 <body>
 
 <header>
-
 <h1>🌿 AI návrhář trvalkového záhonu</h1>
 <p>Navrhni ideální kombinaci rostlin podle podmínek zahrady</p>
-
 </header>
 
 <div class="container">
@@ -127,90 +159,89 @@ color:#666;
 <div class="form-grid">
 
 <div>
-
 <label>Šířka záhonu (m)</label>
 <input id="sirka" type="number" value="3">
-
 </div>
 
 <div>
-
 <label>Délka záhonu (m)</label>
 <input id="delka" type="number" value="2">
-
 </div>
 
 <div>
-
 <label>Světlo</label>
 <select id="svetlo">
 <option value="slunce">Slunce</option>
 <option value="polostin">Polostín</option>
 <option value="stin">Stín</option>
 </select>
-
 </div>
 
 <div>
-
 <label>Půda</label>
 <select id="puda">
-<option>Suchá</option>
-<option>Normální</option>
-<option>Vlhká</option>
+<option value="sucha">Suchá</option>
+<option value="normalni">Normální</option>
+<option value="vlhka">Vlhká</option>
 </select>
-
 </div>
 
 </div>
 
-<button type="button" onclick="navrhni()">Navrhni výsadbu</button>
+<button onclick="navrhni()">Navrhni výsadbu</button>
 
 <div id="vysledek" class="result"></div>
 
 </div>
 
 <footer>
-
 AI experiment – návrh trvalkových záhonů
-
 </footer>
 
 <script>
 
 const databaze = {
 
-slunce:[
-{name:"Lavandula angustifolia",color:"fialová",bloom:"VI–VIII",img:"https://images.unsplash.com/photo-1597848212624-ea9b1b7d0f3e"},
-{name:"Salvia nemorosa",color:"fialová",bloom:"VI–IX",img:"https://images.unsplash.com/photo-1598899134739-24c46f58f273"},
-{name:"Echinacea purpurea",color:"růžová",bloom:"VII–IX",img:"https://images.unsplash.com/photo-1591886960571-74d43a9d4166"},
-{name:"Nepeta faassenii",color:"modrá",bloom:"V–IX",img:"https://images.unsplash.com/photo-1501004318641-b39e6451bec6"},
-{name:"Gaura lindheimeri",color:"bílá",bloom:"VI–X",img:"https://images.unsplash.com/photo-1502082553048-f009c37129b9"}
+slunce:{
+sucha:[
+{name:"Lavandula angustifolia",color:"#9c7bd5",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Lavandula_angustifolia.jpg/640px-Lavandula_angustifolia.jpg"},
+{name:"Nepeta faassenii",color:"#6b8ed6",bloom:"V–IX",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Nepeta_faassenii.jpg/640px-Nepeta_faassenii.jpg"},
+{name:"Gaura lindheimeri",color:"#ffffff",bloom:"VI–X",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Gaura_lindheimeri.jpg/640px-Gaura_lindheimeri.jpg"}
 ],
 
-polostin:[
-{name:"Geranium Rozanne",color:"modrá",bloom:"VI–X",img:"https://upload.wikimedia.org/wikipedia/commons/3/35/Geranium_Rozanne.jpg"},
-{name:"Heuchera Palace Purple",color:"purpurová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heuchera_Palace_Purple.jpg"},
-{name:"Astilbe chinensis",color:"růžová",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Astilbe.jpg"},
-{name:"Brunnera macrophylla",color:"modrá",bloom:"IV–V",img:"https://upload.wikimedia.org/wikipedia/commons/1/1e/Brunnera_macrophylla.jpg"},
-{name:"Alchemilla mollis",color:"žlutá",bloom:"VI–VII",img:"https://upload.wikimedia.org/wikipedia/commons/3/33/Alchemilla_mollis.jpg"}
+normalni:[
+{name:"Salvia nemorosa",color:"#7a4cc2",bloom:"VI–IX",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Salvia_nemorosa.jpg/640px-Salvia_nemorosa.jpg"},
+{name:"Echinacea purpurea",color:"#e0678d",bloom:"VII–IX",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Echinacea_purpurea.jpg/640px-Echinacea_purpurea.jpg"}
 ],
 
-stin:[
-{name:"Hosta",color:"bílá",bloom:"VII–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/3/3e/Hosta.jpg"},
-{name:"Dryopteris filix-mas",color:"zelená",bloom:"nekvete",img:"https://upload.wikimedia.org/wikipedia/commons/0/03/Dryopteris_filix-mas.jpg"},
-{name:"Pulmonaria",color:"modrá",bloom:"III–V",img:"https://upload.wikimedia.org/wikipedia/commons/7/76/Pulmonaria.jpg"},
-{name:"Tiarella",color:"bílá",bloom:"IV–VI",img:"https://upload.wikimedia.org/wikipedia/commons/3/3f/Tiarella_cordifolia.jpg"}
+vlhka:[
+{name:"Ligularia",color:"#ffd34f",bloom:"VII–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Ligularia_dentata.jpg/640px-Ligularia_dentata.jpg"}
 ]
+},
+
+polostin:{
+normalni:[
+{name:"Geranium Rozanne",color:"#6a8de6",bloom:"VI–X",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Geranium_Rozanne.jpg/640px-Geranium_Rozanne.jpg"},
+{name:"Heuchera Palace Purple",color:"#8b3f56",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Heuchera_Palace_Purple.jpg/640px-Heuchera_Palace_Purple.jpg"}
+],
+
+vlhka:[
+{name:"Astilbe",color:"#ff7fa3",bloom:"VI–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Astilbe.jpg/640px-Astilbe.jpg"},
+{name:"Brunnera macrophylla",color:"#6c9ed8",bloom:"IV–V",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Brunnera_macrophylla.jpg/640px-Brunnera_macrophylla.jpg"}
+]
+},
+
+stin:{
+vlhka:[
+{name:"Hosta",color:"#ffffff",bloom:"VII–VIII",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Hosta.jpg/640px-Hosta.jpg"},
+{name:"Pulmonaria",color:"#6a87d9",bloom:"III–V",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Pulmonaria.jpg/640px-Pulmonaria.jpg"}
+]
+}
 
 };
 
-function randomPlants(arr){
-
-let copy=[...arr];
-copy.sort(()=>Math.random()-0.5);
-return copy.slice(0,4);
-
+function shuffle(arr){
+return [...arr].sort(()=>Math.random()-0.5);
 }
 
 function navrhni(){
@@ -218,53 +249,65 @@ function navrhni(){
 let sirka=parseFloat(document.getElementById("sirka").value);
 let delka=parseFloat(document.getElementById("delka").value);
 let svetlo=document.getElementById("svetlo").value;
+let puda=document.getElementById("puda").value;
 
 let plocha=sirka*delka;
 let hustota=5;
 
-let rostliny=databaze[svetlo];
+let rostliny = databaze[svetlo]?.[puda];
 
 if(!rostliny){
-document.getElementById("vysledek").innerHTML="Chyba databáze.";
+document.getElementById("vysledek").innerHTML="<p>Pro tyto podmínky zatím nemáme data.</p>";
 return;
 }
 
-let vybrane=randomPlants(rostliny);
+let vybrane = shuffle(rostliny).slice(0,4);
 
-let pocet=Math.round((plocha*hustota)/vybrane.length);
+let pocet=Math.max(3,Math.round((plocha*hustota)/vybrane.length));
 
 let html="<h3>Doporučená kombinace rostlin</h3>";
 html+="<div class='cards'>";
 
-for(let i=0;i<vybrane.length;i++){
+let palette=[];
 
-let r=vybrane[i];
+vybrane.forEach(r=>{
+
+palette.push(r.color);
 
 html+=`
 <div class="card">
-<img src="${r.img}" style="width:100%;height:140px;object-fit:cover;border-radius:6px">
+
+<img src="${r.img}">
+
 <h4>${r.name}</h4>
-<p>Počet: ${pocet} ks</p>
-<p>Barva květu: ${r.color}</p>
-<p>Kvetení: ${r.bloom}</p>
+
+<p><b>Počet:</b> ${pocet} ks</p>
+<p><b>Kvetení:</b> ${r.bloom}</p>
+
 </div>
 `;
 
-}
+});
+
+html+="</div>";
+
+html+="<h3 style='margin-top:30px'>Barevná paleta záhonu</h3>";
+html+="<div class='palette'>";
+
+palette.forEach(c=>{
+html+=`<div class="color-dot" style="background:${c}"></div>`;
+});
 
 html+="</div>";
 
 html+="<h3 style='margin-top:30px'>Vizualizace výsadby</h3>";
-
-html+="<div style='display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:10px'>";
+html+="<div class='grid'>";
 
 for(let i=0;i<36;i++){
 
-let rostlina=vybrane[i%vybrane.length];
+let r=vybrane[i%vybrane.length];
 
-html+=`<div style="background:#dfeee3;padding:8px;font-size:10px;text-align:center;border-radius:4px;">
-${rostlina.name.split(" ")[0]}
-</div>`;
+html+=`<div class="cell">${r.name.split(" ")[0]}</div>`;
 
 }
 
