@@ -48,38 +48,40 @@
 
 <script>
 
-function navrhniRostliny() {
+async function navrhniRostliny() {
 
 let sirka = document.getElementById("sirka").value;
 let delka = document.getElementById("delka").value;
 let svetlo = document.getElementById("svetlo").value;
+let puda = document.getElementById("puda").value;
 
-let plocha = sirka * delka;
+document.getElementById("vysledek").innerHTML = "🌱 Generuji návrh záhonu...";
 
-let rostliny = "";
-let hustota = 5;
+try {
 
-if (svetlo == "Slunce") {
-rostliny = ["Levandule", "Šalvěj hajní", "Třapatka"];
+const response = await fetch("/api/navrh", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+sirka,
+delka,
+svetlo,
+puda
+})
+});
+
+const data = await response.json();
+
+document.getElementById("vysledek").innerHTML = data.text;
+
+} catch (error) {
+
+document.getElementById("vysledek").innerHTML =
+"❌ Nepodařilo se získat návrh. Zkontroluj API nastavení.";
+
 }
-
-if (svetlo == "Polostín") {
-rostliny = ["Kakost", "Dlužicha", "Čechrava"];
-}
-
-if (svetlo == "Stín") {
-rostliny = ["Kapradina", "Bohyška", "Brunnera"];
-}
-
-let pocet = Math.round(plocha * hustota / rostliny.length);
-
-let vysledek = "";
-
-for (let i = 0; i < rostliny.length; i++) {
-vysledek += rostliny[i] + " – " + pocet + " ks<br>";
-}
-
-document.getElementById("vysledek").innerHTML = vysledek;
 
 }
 
