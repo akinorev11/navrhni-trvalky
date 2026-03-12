@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,63 +12,109 @@
 
 </head>
 
+
 <body>
 
+
 <header>
+
 <h1>🌿 AI návrhář trvalkového záhonu</h1>
-<p>Zkombinujte trvalky a okrasné trávy podle stanoviště</p>
+<p>Navrhněte kombinaci trvalek a okrasných trav podle podmínek zahrady</p>
+
 </header>
+
 
 
 <div class="container">
 
+
+<section class="form-section">
+
+<h2>Nastavení záhonu</h2>
+
 <div class="form-grid">
 
-<div>
+<div class="form-item">
 <label>Šířka záhonu (m)</label>
-<input id="sirka" type="number" value="3">
+<input id="sirka" type="number" value="3" min="1">
 </div>
 
-<div>
+<div class="form-item">
 <label>Délka záhonu (m)</label>
-<input id="delka" type="number" value="2">
+<input id="delka" type="number" value="2" min="1">
 </div>
 
-<div>
+<div class="form-item">
 <label>Světlo</label>
+
 <select id="svetlo">
+
 <option value="slunce">Plné slunce</option>
 <option value="polostin">Polostín</option>
 <option value="stin">Stín</option>
+
 </select>
+
 </div>
 
-<div>
+<div class="form-item">
+
 <label>Půda</label>
+
 <select id="puda">
+
 <option value="sucha">Suchá</option>
 <option value="normalni">Normální</option>
 <option value="vlhka">Vlhká</option>
+
 </select>
-</div>
 
 </div>
 
+</div>
 
-<button onclick="navrhni()">Navrhni výsadbu</button>
+
+<button class="main-button" onclick="navrhni()">
+Navrhni výsadbu
+</button>
+
+</section>
 
 
-<div id="vysledek" class="result"></div>
+
+<section class="result-section">
+
+<h2>Doporučené rostliny</h2>
+
+<div id="plants" class="cards"></div>
+
+</section>
+
+
+
+<section class="plan-section">
+
+<h2>Vizualizace záhonu</h2>
+
+<div id="plan" class="plan-grid"></div>
+
+</section>
+
 
 </div>
+
 
 
 <footer>
+
 AI experiment – návrh trvalkových záhonů
+
 </footer>
+
 
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
